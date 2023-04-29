@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ComposeCamp</string>
+    <string name="happy_birthday_sam">Happy Birthday Sam!</string>
+    <string name="from_omneya">from Omneya</string>
 </resources>
