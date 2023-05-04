@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -37,6 +38,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.omni.composecamp.ui.theme.ComposeCampTheme
+import java.nio.file.WatchEvent
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,10 +59,17 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun BusinessCardHeader(name: String, title: String, modifier: Modifier = Modifier) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xFF073042)),
+    ) {
         Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(3F),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Bottom,
         ) {
             Image(
                 painter = painterResource(id = R.drawable.android_logo),
@@ -68,7 +77,8 @@ fun BusinessCardHeader(name: String, title: String, modifier: Modifier = Modifie
                 contentDescription = "developer image",
                 modifier = Modifier
                     .size(100.dp)
-                    .clip(RoundedCornerShape(20.dp)).background(Color.Black)
+                    .clip(RoundedCornerShape(20.dp))
+                    .background(Color.Black)
             )
             Text(
                 text = "$name!",
@@ -79,14 +89,18 @@ fun BusinessCardHeader(name: String, title: String, modifier: Modifier = Modifie
                 text = "$title!",
                 modifier = modifier.padding(8.dp)
             )
-            BusinessCardDetails()
         }
+        BusinessCardDetails(Modifier.weight(2F))
+
+    }
 }
 
 @Composable
-fun BusinessCardDetails() {
+fun BusinessCardDetails(modifier: Modifier) {
     Column(
-
+        modifier = modifier
+            .fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Bottom
     ) {
 
@@ -99,7 +113,7 @@ fun BusinessCardDetails() {
 
 @Composable
 private fun BusinessCardContactDetail(detail: String, imageVector: ImageVector) {
-    Row {
+    Row(Modifier.fillMaxWidth()) {
         Icon(imageVector, contentDescription = "", tint = Color(0xFF3ddc84))
         Spacer(modifier = Modifier.size(ButtonDefaults.IconSize))
         Text(text = detail, textAlign = TextAlign.Center)
