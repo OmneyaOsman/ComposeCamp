@@ -1,6 +1,5 @@
 package com.omni.composecamp
 
-import android.graphics.drawable.Icon
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -10,7 +9,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -38,7 +36,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.omni.composecamp.ui.theme.ComposeCampTheme
-import java.nio.file.WatchEvent
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -104,15 +101,15 @@ fun BusinessCardDetails(modifier: Modifier) {
         verticalArrangement = Arrangement.Bottom
     ) {
 
-        BusinessCardContactDetail("+20 01212990036", Icons.Filled.Call)
-        BusinessCardContactDetail("@AndroidDev", Icons.Filled.Share)
-        BusinessCardContactDetail("engomneya.osman@gmail.com", Icons.Filled.Email)
+        BusinessCardContactRow("+20 01212990036", Icons.Filled.Call)
+        BusinessCardContactRow("@AndroidDev", Icons.Filled.Share)
+        BusinessCardContactRow("engomneya.osman@gmail.com", Icons.Filled.Email)
     }
 
 }
 
 @Composable
-private fun BusinessCardContactDetail(detail: String, imageVector: ImageVector) {
+private fun BusinessCardContactRow(detail: String, imageVector: ImageVector) {
     Row(Modifier.fillMaxWidth()) {
         Icon(imageVector, contentDescription = "", tint = Color(0xFF3ddc84))
         Spacer(modifier = Modifier.size(ButtonDefaults.IconSize))
