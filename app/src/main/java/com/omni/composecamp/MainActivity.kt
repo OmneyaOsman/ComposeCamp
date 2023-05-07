@@ -4,6 +4,7 @@ import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.SpringSpec
 import androidx.compose.animation.core.animateDpAsState
@@ -83,26 +84,28 @@ private fun Greeting(name: String) {
     var isExpanded by remember {
         mutableStateOf(false)
     }
-    val extraPadding by animateDpAsState(
-        if (isExpanded) 48.dp else 0.dp, animationSpec = SpringSpec(
-            dampingRatio = Spring.DampingRatioMediumBouncy, stiffness = Spring.StiffnessLow
-        )
-    )
-
 
 //    val surfaceColor by animateColorAsState(if (isExpanded) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary)
 
     Surface(
         color = MaterialTheme.colorScheme.primary,
         modifier = Modifier
-//            .animateContentSize()
             .padding(vertical = 4.dp, horizontal = 8.dp)
     ) {
-        Row(Modifier.padding(24.dp)) {
+        Row(
+            Modifier
+                .padding(12.dp)
+                .animateContentSize(
+                    animationSpec = SpringSpec(
+                        dampingRatio = Spring.DampingRatioMediumBouncy,
+                        stiffness = Spring.StiffnessLow
+                    )
+                )
+        ) {
             Column(
                 modifier = Modifier
                     .weight(1F)
-                    .padding(bottom = extraPadding.coerceAtLeast(0.dp)),
+                    .padding(12.dp),
                 horizontalAlignment = Alignment.Start
             ) {
                 Text(text = "Hello, ")
@@ -110,13 +113,16 @@ private fun Greeting(name: String) {
                     text = name,
                     style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.ExtraBold)
                 )
-                Text(
-                    text = "Layout basics: Learn about the building blocks for a straightforward app UI Material Components and layouts: Learn about Material components and layouts in Compose.ConstraintLayout: Learn how to use ConstraintLayout in your Compose UI.",
-                    maxLines = if (isExpanded) Int.MAX_VALUE else 1
-                )
+                if (isExpanded)
+                    Text(
+                        text = "Layout basics: Learn about the building blocks for a straightforward app UI Material Components and layouts: Learn about Material components and layouts in Compose.ConstraintLayout: Learn how to use ConstraintLayout in your Compose UI.",
+                    )
             }
-            IconButton(onClick = {isExpanded = !isExpanded} ){
-                Icon(imageVector =if(isExpanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore, contentDescription ="icon" )
+            IconButton(onClick = { isExpanded = !isExpanded }) {
+                Icon(
+                    imageVector = if (isExpanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
+                    contentDescription = "icon"
+                )
             }
 //            ElevatedButton(onClick = { isExpanded = !isExpanded }) {
 //                Text(text = if (isExpanded) "Show less" else "Show more")
