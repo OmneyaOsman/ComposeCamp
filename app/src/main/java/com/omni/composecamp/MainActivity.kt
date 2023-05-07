@@ -3,15 +3,12 @@ package com.omni.composecamp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.omni.composecamp.ui.theme.ComposeCampTheme
@@ -26,27 +23,44 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
+                    HomeScreen()
                 }
             }
         }
     }
 }
 
+
+
+
+@Preview(showBackground = true)
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Surface(color = Color.Magenta) {
-        Text(
-            text = "Hello my name is $name!",
-            modifier = modifier.padding(8.dp)
+fun SearchBarPreview() {
+    ComposeCampTheme {
+        AlignYourBodyItem(
+            text = R.string.ab1_inversions,
+            drawable = R.drawable.ab1_inversions,
+            modifier = Modifier.padding(8.dp)
         )
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun AlignYourBodyRowPreview() {
     ComposeCampTheme {
-        Greeting("Android")
+        HomeScreen()
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun FavoritePreview() {
+    ComposeCampTheme {
+        FavoriteCollectionCard(
+            text = R.string.fc1_short_mantras,
+            drawable = R.drawable.fc1_short_mantras,
+            modifier = Modifier.padding(8.dp)
+        )
     }
 }
