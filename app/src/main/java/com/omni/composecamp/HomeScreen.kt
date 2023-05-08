@@ -7,20 +7,29 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -38,18 +47,46 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import java.util.Locale
+
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier) {
-    //1-Search bar
-    //2-lazy row
-    //3-horizontal grid
-    Column(modifier , horizontalAlignment = Alignment.CenterHorizontally) {
-       SearchBar()
-        AlignYourBodyRow()
-    }
+fun HomeScreen(modifier: Modifier= Modifier) {
+    Column(
+        modifier
+            .padding(vertical = 16.dp)
+            .verticalScroll(rememberScrollState())) {
+        Spacer(modifier = Modifier.height(16.dp))
+        SearchBar(Modifier.padding(horizontal = 16.dp))
+        HomeSection(R.string.align_your_body) {
+            AlignYourBodyRow()
+        }
 
+        HomeSection(R.string.favorite_collections) {
+            FavoriteCollectionSection()
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+    }
+}
+@Composable
+fun HomeSection(
+    @StringRes title: Int,
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit
+) {
+    Column(modifier) {
+        Text(
+            stringResource(title).uppercase(Locale.getDefault()),
+            style = MaterialTheme.typography.titleMedium,
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+                .paddingFromBaseline(top = 40.dp, bottom = 8.dp)
+
+        )
+        content()
+    }
 }
 
 
@@ -76,8 +113,9 @@ fun SearchBar(modifier: Modifier = Modifier) {
 @Composable
 fun AlignYourBodyRow(modifier: Modifier = Modifier) {
     LazyRow(
-        modifier, horizontalArrangement = Arrangement.spacedBy(8.dp)
-        , contentPadding = PaddingValues(horizontal = 16.dp)
+        modifier,
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        contentPadding = PaddingValues(horizontal = 16.dp)
     ) {
         items(SimpleData.alignYourBodyData) { item ->
             AlignYourBodyItem(
@@ -133,5 +171,26 @@ fun FavoriteCollectionCard(
         }
     }
 }
+
+@Composable
+fun FavoriteCollectionSection(modifier: Modifier = Modifier) {
+    LazyHorizontalGrid(
+        rows = GridCells.Fixed(2),
+        modifier = modifier.height(120.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        contentPadding = PaddingValues(horizontal = 16.dp)
+    ) {
+        items(SimpleData.favoriteCollectionsData) { item ->
+            FavoriteCollectionCard(
+                drawable = item.drawable,
+                text = item.text,
+                Modifier.height(56.dp)
+            )
+        }
+    }
+}
+
+
 
 
